@@ -1,0 +1,122 @@
+rule r1 {
+  description: "r1"
+  participant: "ANY"
+  operation: ALL
+  resource: "org.hyperledger.composer.system.**"
+  action: ALLOW
+}
+
+rule r2 {
+  description:  "r2"
+  participant: "org.hyperledger.composer.system.NetworkAdmin"
+  operation: ALL
+  resource: "org.decentrify.network.**"
+  action: ALLOW  
+}
+
+rule r3 {
+  description:  "r3"
+  participant: "org.decentrify.network.networkRegulatorParticipant"
+  operation: ALL
+  resource: "org.decentrify.network.**"
+  action: ALLOW  
+}
+
+rule r4 {
+  description: "r4"
+  participant: "ANY"
+  operation: CREATE
+  resource: "org.hyperledger.composer.system.HistorianRecord"
+  action: ALLOW  
+}
+
+rule r5 {
+  description: "r5"
+  participant(p): "ANY"
+  operation: READ
+  resource(r): "org.hyperledger.composer.system.HistorianRecord"
+  condition: (r.participantInvoking.getIdentifier() == p.getIdentifier())
+  action: ALLOW
+}
+
+rule r6 {
+  description:  "r6"
+  participant: "org.decentrify.network.instituteParticipant"
+  operation: CREATE
+  resource: "org.decentrify.network.degreeAsset"
+  action: ALLOW  
+}
+
+rule r7 {
+  description:  "r7"
+  participant(p): "org.decentrify.network.instituteParticipant"
+  operation: READ, UPDATE, DELETE
+  resource(r): "org.decentrify.network.degreeAsset"
+  condition: (r.institute.getIdentifier() == p.getIdentifier())
+  action: ALLOW  
+}
+ 
+rule r8 {
+  description:  "r8"
+  participant: "org.decentrify.network.instituteParticipant"
+  operation: CREATE
+  resource: "org.decentrify.network.studentParticipant"
+  action: ALLOW  
+}
+
+rule r9 {
+  description:  "r9"
+  participant(p): "org.decentrify.network.instituteParticipant"
+  operation: READ, UPDATE, DELETE
+  resource(r): "org.decentrify.network.studentParticipant"
+  condition: (r.institute.getIdentifier() == p.getIdentifier())
+  action: ALLOW
+}
+
+rule r10 {
+  description:  "r10"
+  participant: "ANY"
+  operation: CREATE, READ, UPDATE
+  resource: "org.decentrify.network.employerParticipant"
+  action: ALLOW  
+}
+
+rule r11 {
+  description:  "r11"
+  participant: "ANY"
+  operation: CREATE
+  resource: "org.decentrify.network.invokeAccess"
+  action: ALLOW  
+}
+
+rule r12 {
+  description:  "r12"
+  participant: "ANY"
+  operation: CREATE, READ
+  resource: "org.decentrify.network.viewDegree"
+  action: ALLOW  
+}
+
+rule r13 {
+  description:  "r13"
+  participant: "ANY"
+  operation: CREATE, READ
+  resource: "org.decentrify.network.revokeAccess"
+  action: ALLOW  
+}
+
+rule r14 {
+  description:  "r14"
+  participant: "ANY"
+  operation: READ
+  resource: "org.decentrify.network.studentParticipant"
+  action: ALLOW  
+}
+
+rule r15 {
+  description:  "r15"
+  participant: "ANY"
+  operation: READ, UPDATE
+  resource: "org.decentrify.network.degreeAsset"
+  action: ALLOW  
+}

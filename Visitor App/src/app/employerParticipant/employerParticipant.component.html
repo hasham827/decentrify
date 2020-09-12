@@ -1,0 +1,147 @@
+<!--
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+<div class="modal fade" id="addParticipantModal" tabindex="-1" role="dialog" aria-labelledby="addParticipantModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="addParticipantModalLabel">Add Employer</h4>
+            <p class="modal-intro">Enter the required values below.</p>
+        </div>
+        <form [formGroup]="myForm">
+          <div class="modal-body">
+  
+  
+              <div class="form-group text-left">
+                  <label for="id">Employer-ID *</label>
+                  
+                    <input formControlName="id" placeholder="123" type="text" class="form-control">
+                  
+                </div>
+              
+              
+                <div class="form-group text-left">
+                  <label for="name">Employer's Company Name *</label>
+                  
+                    <input formControlName="name" placeholder="company name" type="text" class="form-control">
+                  
+                </div>      
+                
+                <div class="form-group text-left">
+                    <label for="allowedViews">Allowed Views *</label>
+                    
+                      <input formControlName="allowedViews" placeholder="how many times employer could view" type="number" class="form-control">
+                    
+                  </div>
+                
+                
+                  <div class="form-group text-left">
+                    <label for="employerSecret">Employer Secret *</label>
+                    
+                      <input formControlName="employerSecret" placeholder="choose 6-digit secret e.g. 123456" type="text" class="form-control">
+                    
+                  </div>
+  
+              
+                  <div class="form-group text-left">
+                      <label for="phone">Contact</label>
+                      
+                        <input formControlName="phone" placeholder="phone number" type="text" class="form-control">
+                      
+                    </div>
+
+                <div class="form-group text-left">
+                  <label for="address">Address</label>
+                  
+                    <input formControlName="address" placeholder="location of company" type="text" class="form-control">
+                  
+                </div>
+
+  
+              
+                <div class="form-group text-left">
+                  <label for="email">Email</label>
+                  
+                    <input formControlName="email" placeholder="e-mail address" type="text" class="form-control">
+                  
+                </div>
+              
+            
+  
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            <button (click)="addParticipant(myForm);" type="submit" class="btn btn-success" data-dismiss="modal">Confirm</button>
+  
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  
+  
+  
+  
+  
+  <div class="container">
+      <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+          <strong>Error:</strong> {{errorMessage}}
+      </div>
+    
+    <div class="row">
+      <div class="col-md-9">                                                                                                                                                                                                                                                                                                                                                      
+          <h1 class="participant-title" id='participantName'>Most Popular Employers on Decentrify</h1>
+      </div>
+      <div class="col-md-3">
+        <button (click)="resetForm()" type="button" class="btn btn-primary" data-toggle="modal" data-target="#addParticipantModal">
+            <span style="font-size: 14px;font-family: inherit;border-right:1px solid rgba(255,255,255,0.5);padding-right:0.6em;margin-right:0.5em;vertical-align:middle;">
+                <svg class="plus-svg" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10">
+                  <path fill-rule="evenodd" d="M5.5,4.5 L9.5,4.5 L10,4.5 L10,5.5 L9.5,5.5 L5.5,5.5 L5.5,9.5 L5.5,10 L4.5,10 L4.5,9.5 L4.5,5.5 L0.5,5.5 L0,5.5 L0,4.5 L0.5,4.5 L4.5,4.5 L4.5,0.5 L4.5,0 L5.5,0 L5.5,0.5 L5.5,4.5 Z"/>
+                </svg>
+            </span>
+          Add Employer
+        </button>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-md-12">
+        <table class="table table-responsive">
+          <thead class="thead">
+            <tr class="thead-cols">
+              
+              
+                  <th class="info">ID</th>
+              
+                  <th class="info">Employer's Company Name</th>
+              
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let participant of allParticipants">
+                                                                                                                                                                                                                                                                                                                                                                    
+              
+                  <td class="participant-properties">{{participant.id}}</td>
+              
+                  <td class="participant-properties">{{participant.name}}</td>
+              
+              
+              
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>

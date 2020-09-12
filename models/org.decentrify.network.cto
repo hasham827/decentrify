@@ -1,0 +1,78 @@
+/**
+ * participants and assets declaration
+ */
+
+//implicitly applies to all resources created in it
+namespace org.decentrify.network
+
+//base resource for participant
+abstract participant decentrifyParticipant identified by id {
+  o String		id regex=/^[0-9]/
+  o String		name
+  o String		email optional
+}
+
+//child resource, visitorParticipant who will execute all general transactions
+participant visitorParticipant extends decentrifyParticipant {
+  /** This is a concrete resource definition */
+}
+
+//child resource, networkRegulator who will regulate the blockchain network
+participant networkRegulatorParticipant extends decentrifyParticipant {
+  /** This is a concrete resource definition */
+}
+
+//child resource, instituteParticipant who will enroll student and create degree
+participant instituteParticipant extends decentrifyParticipant {
+  o String		yearFound regex=/^[0-9]{4}/
+  o String		capacity regex=/^[0-9]/
+}
+
+//child resource, employerParticipant who want to view student degree
+participant employerParticipant extends decentrifyParticipant {
+  o String		address optional
+  o String		phone regex=/^[0-9]/ optional 
+  o Integer allowedViews default = 0
+  o String    employerSecret default="000000" regex=/^[0-9]{6}/
+}
+
+//child resource, studentParticipant whose degree will be created, then he permits employer to view it
+participant studentParticipant extends decentrifyParticipant {
+  o String		fatherName
+  o DateTime	DOB default="01/01/1990"
+  o String    studentSecret default="000000" regex=/^[0-9]{6}/
+  --> instituteParticipant 	institute
+}
+
+//degree resource that holds degree details 
+asset degreeAsset identified by degreeId {
+  o String 		degreeId
+  --> studentParticipant 	student
+  --> instituteParticipant 	institute
+  o String 		degreeName
+  o String 		degreeDuration regex=/^[0-9]{1}/
+  o String 		passingYear regex=/^[0-9]{4}/
+  o Double cgpa	default = 0.0
+  o Integer allowedViews default = 0
+}
+
+//transaction when student adds employer
+transaction invokeAccess {
+  --> degreeAsset degree
+  o Integer allowedViews default = 0
+  o String    studentSecret default="000000" regex=/^[0-9]{6}/ 
+}
+  
+//transaction when employer views the degree
+transaction viewDegree {
+  --> degreeAsset degree
+  --> employerParticipant employer
+  o String    employerSecret default="000000" regex=/^[0-9]{6}/ 
+}
+  
+ //transaction when student revokes degree view access
+transaction revokeAccess {
+  --> degreeAsset degree
+  --> employerParticipant employer
+  o String    studentSecret default="000000" regex=/^[0-9]{6}/  
+}
